@@ -14,8 +14,9 @@ import {
 import './index.css'
 
 const MODELS = [
-  { id: 'gpt-4.1', name: 'GPT-4.1' },
+  { id: 'gemini-3-flash-preview', name: 'Gemini-3-flash' },
   { id: 'gpt-5', name: 'GPT-5' },
+  { id: 'gpt-4.1', name: 'GPT-4.1' },
   { id: 'gpt-4', name: 'GPT-4' },
   { id: 'gpt-4-turbo', name: 'GPT-4 Turbo' },
   { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo' },
