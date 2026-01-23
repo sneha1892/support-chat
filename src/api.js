@@ -20,7 +20,7 @@ export async function sendMessage(messages, model) {
             type: "enabled",
             budget_tokens: 10000
         },
-        organisation_id: 13,
+        organisation_id: 23,
         metadata: {
             source: "copilotkit codebase agent"
         }
