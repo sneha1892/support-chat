@@ -1,7 +1,7 @@
-// API service for Lambda communication
-
-const LAMBDA_URL = import.meta.env.VITE_LAMBDA_URL;
-const API_KEY = import.meta.env.VITE_ORCA_API_KEY;
+// API service for backend communication
+// In production this should hit a same-origin serverless route (`/api/chat`)
+// to avoid browser CORS preflight issues with direct Lambda calls.
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || '/api/chat';
 
 export async function sendMessage(messages, model) {
     const requestBody = {
@@ -26,17 +26,23 @@ export async function sendMessage(messages, model) {
         }
     };
 
-    const response = await fetch(LAMBDA_URL, {
+    const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'x-orca-api-key': API_KEY
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(requestBody)
     });
 
     if (!response.ok) {
-        throw new Error(`Lambda request failed: ${response.status} ${response.statusText}`);
+        let details = '';
+        try {
+            const errorBody = await response.json();
+            details = errorBody?.error ? ` - ${errorBody.error}` : '';
+        } catch {
+            // Ignore JSON parse errors and keep status-only message.
+        }
+        throw new Error(`Request failed: ${response.status} ${response.statusText}${details}`);
     }
 
     const data = await response.json();
