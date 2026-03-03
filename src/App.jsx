@@ -55,7 +55,7 @@ function App() {
   const [threads, setThreads] = useState([])
   const [activeThreadId, setActiveThreadId] = useState(null)
   const [inputMessage, setInputMessage] = useState('')
-  const [selectedModel, setSelectedModel] = useState('gpt-4.1')
+  const [selectedModel, setSelectedModel] = useState('google/gemini-3-flash-preview')
   const [loadingThreads, setLoadingThreads] = useState({})
   const [pendingRequests, setPendingRequests] = useState({})
   const [error, setError] = useState(null)
