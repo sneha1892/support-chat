@@ -4,12 +4,17 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const lambdaUrl = process.env.LAMBDA_URL;
-  const apiKey = process.env.ORCA_API_KEY;
+  const lambdaUrl = process.env.LAMBDA_URL || process.env.VITE_LAMBDA_URL;
+  const apiKey = process.env.ORCA_API_KEY || process.env.VITE_ORCA_API_KEY;
 
   if (!lambdaUrl || !apiKey) {
+    const missing = [
+      !lambdaUrl ? 'LAMBDA_URL (or VITE_LAMBDA_URL)' : null,
+      !apiKey ? 'ORCA_API_KEY (or VITE_ORCA_API_KEY)' : null
+    ].filter(Boolean);
+
     return res.status(500).json({
-      error: 'Server is not configured. Set LAMBDA_URL and ORCA_API_KEY.'
+      error: `Server is not configured. Missing: ${missing.join(', ')}`
     });
   }
 
